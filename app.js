@@ -10,6 +10,12 @@ const app = express();
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
 
+//enable cors
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 //create database
 const db = new Sequelize('whackaBrady', 'christianhaasis', '', {
     dialect: 'postgres',
