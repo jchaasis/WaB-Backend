@@ -50,14 +50,19 @@ Score.sync().then(function () {
 
   app.post("/add", function(req, res){
     let data = [];
-
+    let finalData;
     req.on('data', (chunk) => {
         data.push(chunk);
       }).on('end', () => {
-
         data = Buffer.concat(data).toString();
 
-        console.log('this is the body: ' + data)
+        finalData = JSON.parse(data);
+
+         Score.create({
+            player: finalData.user,
+            score: finalData.score,
+         });
+
       })
 
       console.log(data)
