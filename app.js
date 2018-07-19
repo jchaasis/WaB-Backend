@@ -41,14 +41,30 @@ Score.sync().then(function () {
   //get routes
   //get all the scores to display on the sidebar
   app.get("/", function(req, res){
-    console.log(req);
-    console.log('received the get request');
     Score.findAll().then((items)=>{
       res.send({
                 Scores: items,
       });
     });
   });
+
+  app.post("/add", function(req, res){
+    let data = [];
+
+    req.on('data', (chunk) => {
+        data.push(chunk);
+      }).on('end', () => {
+
+        data = Buffer.concat(data).toString();
+
+        console.log('this is the body: ' + data)
+      })
+
+      console.log(data)
+      res.send({
+          'request received': true
+      })
+  })
 
 app.listen(port, function(){
     console.log("Whack awhay on on port 4000");
