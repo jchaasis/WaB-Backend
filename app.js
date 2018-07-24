@@ -20,28 +20,23 @@ app.use(function(req, res, next) {
 const db = new Sequelize('whackaBrady', 'christianhaasis', '', {
     dialect: 'postgres',
 });
-
+//schema for the scores database
 const Score = db.define('score', {
     player: Sequelize.STRING,
     score: Sequelize.INTEGER,
 });
 
-// Sychronize the 'todo' schema with the database, meaning make
+// Sychronize the Score schema with the database, meaning make
 // sure all tables exist and have the right fields.
-Score.sync().then(function () {
-    console.log('scores has synced')
-    // Score.create({
-    //      player: 'TST',
-    //      score: 7,
-    // });
-});
-
+Score.sync()
 //establish routes
-
   //get routes
   //get all the scores to display on the sidebar
   app.get("/", function(req, res){
-    Score.findAll().then((items)=>{
+    Score.findAll({
+    // Will order by score descending
+    order: Sequelize.literal('score DESC')
+    }).then((items)=>{
       res.send({
                 Scores: items,
       });
@@ -54,18 +49,17 @@ Score.sync().then(function () {
     req.on('data', (chunk) => {
         data.push(chunk);
       }).on('end', () => {
+        //Filter out the data from the post request
         data = Buffer.concat(data).toString();
-
+        //parse that data
         finalData = JSON.parse(data);
-
+        //add a new score based off of the received data
          Score.create({
             player: finalData.user,
             score: finalData.score,
          });
-
       })
 
-      console.log(data)
       res.send({
           'request received': true
       })
