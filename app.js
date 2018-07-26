@@ -2,14 +2,11 @@ const express = require('express');
 const Sequelize = require('sequelize');
 //will use bodyparser to accept the form data for the score
 const bodyparser = require('body-parser');
-
-
 //establish server
 const port = process.env.PORT || 4000;
 const app = express();
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
-
 //enable cors
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -42,7 +39,7 @@ Score.sync()
       });
     });
   });
-
+  //post routes
   app.post("/add", function(req, res){
     let data = [];
     let finalData;
@@ -59,7 +56,7 @@ Score.sync()
             score: finalData.score,
          });
       })
-
+      //let the client know that we have received the information
       res.send({
           'request received': true
       })
