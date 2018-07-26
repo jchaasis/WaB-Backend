@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 //will use bodyparser to accept the form data for the score
 const bodyparser = require('body-parser');
 //establish server
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const app = express();
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -63,5 +63,5 @@ Score.sync()
   })
 
 app.listen(port, function(){
-    console.log("Whack awhay on on port 4000");
+    console.log(`Listening on port ${PORT}`);
   });
