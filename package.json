@@ -1,6 +1,9 @@
 {
     "requires": true,
     "lockfileVersion": 1,
+    "scripts": {
+        "start": "node app.js",
+    },
     "dependencies": {
       "@types/geojson": {
         "version": "1.0.6",
