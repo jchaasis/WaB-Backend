@@ -8,9 +8,21 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+// if (config.use_env_variable) {
+//   var sequelize = new Sequelize(process.env[config.use_env_variable]);
+// } else {
+//   var sequelize = new Sequelize(config.database, config.username, config.password, config);
+// }
+
+if (process.env.DATABASE_URL) {
+  // the application is executed on Heroku ... use the postgres database
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect:  'postgres',
+    protocol: 'postgres',
+    logging:  true //false
+  });
 } else {
+  // the application is executed on the local machine
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
@@ -30,7 +42,9 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+// Adds `sequelize` instance to db object.
 db.sequelize = sequelize;
+// Adds `Sequelize` class to db object.
 db.Sequelize = Sequelize;
 
 module.exports = db;
