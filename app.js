@@ -24,7 +24,7 @@ const client = new Client({
     }
 
   client.end();
-
+});
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
 //enable cors
