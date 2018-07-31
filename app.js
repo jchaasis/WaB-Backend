@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
-const Client = require('pg');
+
+const { Client } = require('pg');
 
 //will use bodyparser to accept the form data for the score
 const bodyparser = require('body-parser');
@@ -14,7 +15,16 @@ const client = new Client({
     ssl: true,
   });
 
-client.connect();
+  client.connect();
+
+  client.query('SELECT * ;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+
+  client.end();
+
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
 //enable cors
