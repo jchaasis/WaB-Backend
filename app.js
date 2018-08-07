@@ -19,11 +19,11 @@ app.use(function(req, res, next) {
     next();
   });
 //create database
-const db = new Sequelize('whackaBrady', 'christianhaasis', '', {
+const db = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
 });
 //schema for the scores database
-const Score = db.define(process.env.DATABASE_URL, {
+const Score = db.define('score', {
     player: Sequelize.STRING,
     score: Sequelize.INTEGER,
 });
