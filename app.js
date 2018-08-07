@@ -1,8 +1,6 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 
-const { Client } = require('pg');
-
 //will use bodyparser to accept the form data for the score
 const bodyparser = require('body-parser');
 //establish server
