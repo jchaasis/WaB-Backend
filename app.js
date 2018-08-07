@@ -9,22 +9,7 @@ const bodyparser = require('body-parser');
 const port = process.env.PORT || 5000;
 const app = express();
 
-//setup client
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-  });
 
-  client.connect();
-
-  client.query('SELECT * ;', (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-
-  client.end();
-});
 //initialize bodyparser
 app.use(bodyparser.urlencoded({ extended: false }));
 //enable cors
@@ -38,7 +23,7 @@ const db = new Sequelize('whackaBrady', 'christianhaasis', '', {
     dialect: 'postgres',
 });
 //schema for the scores database
-const Score = db.define('score', {
+const Score = db.define(process.env.DATABASE_URL, {
     player: Sequelize.STRING,
     score: Sequelize.INTEGER,
 });
